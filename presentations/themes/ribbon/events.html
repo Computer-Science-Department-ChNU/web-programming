@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <title>Introduction to Events</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+</head>
+<body class="shower list">
+
+<header class="caption">
+    <h1>Browser events</h1>
+</header>
+
+<section class="slide">
+    <h2>Що ми маємо, коли JavaScript працює в веббраузері?</h2>
+    <img src="pictures/intro.jpg" width="70%">
+</section>
+
+<section class="slide">
+    <h2>Що ми маємо, коли JavaScript працює в веббраузері?</h2>
+    <img class="next" src="pictures/windowObjects.svg">
+</section>
+
+<section class="slide">
+    <h2>Що ми маємо, коли JavaScript працює в веббраузері?</h2>
+    <div class="columns two">
+        <img src="pictures/windowObjects.svg">
+        <div>
+            <ul>
+                <li>Window - це глобальний об’єкт для коду JavaScript (фактично являє собою браузер)</li>
+                <li>Window - являє собою “вікно браузера” та надає способи для керування ним.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Що ми маємо, коли JavaScript працює в веббраузері?</h2>
+    <div class="columns two">
+        <img src="pictures/windowObjects.svg">
+        <div>
+            <ul>
+                <li>Document Object Model, або скорочено DOM – представляє весь контент сторінки як об’єкти, які можуть
+                    бути змінені.
+                </li>
+                <li>Об’єкт document – це головна “точка входу” до сторінки. Ми можемо змінити або створити що-небудь на
+                    сторінці, використовуючи цей об’єкт.
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Що ми маємо, коли JavaScript працює в веббраузері?</h2>
+    <div class="columns two">
+        <img src="pictures/windowObjects.svg">
+        <div>
+            <ul>
+                <li>Модель об’єкта браузера (Browser Object Model, BOM) – це додаткові об’єкти, надані браузером
+                    (хост-середовищем) для роботи з усім, крім документа.
+                </li>
+                <li>BOM – це частина загальної <a href="https://html.spec.whatwg.org"
+                                                  target="_blank">HTML-специфікації</a>.
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Вступ до подій браузера</h2>
+    <p>
+        Для взаємодії з користувачем JavaScript визначено механізм подій. Наприклад, коли користувач натискає кнопку,
+        виникає подія натискання кнопки. Аналогічно коли користувач вводить текстове поле текст, виникає подія цього
+        текстового поля. У коді JavaScript ми можемо визначити виникнення події та якось її обробити.
+    </p>
+    <p><b>Подія</b> – це сигнал від браузера, що щось сталося. Всі DOM-вузли подають такі сигнали.</p>
+</section>
+
+<section class="slide">
+    <h2>Коротко загальний механізм має такий вигляд:</h2>
+    <ol>
+        <li class="next">
+            Спочатку власне відбувається подія, наприклад, користувач натиснув кнопку. Об'єкт, який згенерував подію, ще
+            називається <b>емітером/емітентом</b> події.
+        </li>
+        <li class="next">
+            Після того, як сталася подія, вона поміщається в чергу подій <b>(event queue)</b>, що гарантує, що події,
+            які були згенеровані першими, також будуть оброблені в першу чергу.
+        </li>
+        <li class="next">
+            Цикл подій <b>(event loop)</b> постійно перевіряє, чи є нова подія у черзі подій, і якщо вона є, відповідна
+            подія пересилається обробникам подій <b>(event handler)</b>.
+        </li>
+    </ol>
+</section>
+
+<section class="slide">
+    <h2>Список найпоширеніших DOM-подій:</h2>
+    <ul>
+        <li class="next">Події миші</li>
+        <li class="next">Події клавіатури</li>
+        <li class="next">Події елементів форми</li>
+        <li class="next">CSS події</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Події миші:</h2>
+    <ul>
+        <li>click</li>
+        <li>contextmenu</li>
+        <li>mouseover / mouseout – коли миша наводиться на / залишає елемент.</li>
+        <li>mousedown / mouseup – коли натиснули / відпустили кнопку миші на елементі.</li>
+        <li>mousemove</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Події клавіатури:</h2>
+    <ul>
+        <li>keydown</li>
+        <li>keyup</li>
+    </ul>
+    <h2>Події елементів форми:</h2>
+    <ul>
+        <li>submit – користувач надіслав форму</li>
+        <li>focus – користувач фокусується на елементі, наприклад, натискає на.</li>
+        <li>blur</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Події документа:</h2>
+    <ul>
+        <li>DOMContentLoaded – коли HTML завантажено й оброблено, DOM документа повністю побудований і доступний.</li>
+    </ul>
+    <h2>CSS події:</h2>
+    <ul>
+        <li>transitionend – коли CSS-анімацію завершено.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій</h2>
+    <p>Події можна призначити обробник, тобто функцію, яка спрацює, щойно подія сталася.</p>
+    <p>Використання атрибута HTML (onclick)</p>
+    <button onclick="alert('Click')" type="button">Click me</button>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (Використання атрибута HTML)</h2>
+    <script>
+        function countClick() {
+            for (let i = 1; i <= 3; i++) {
+                alert("Click number " + i);
+            }
+        }
+    </script>
+    <input type="button" onclick="countClick()" value="Click counter">
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (Використання властивостей DOM-об’єкта)</h2>
+    <input id="elem" type="button" value="Click me">
+    <script>
+        elem.onclick = function () {
+            alert('Дякую');
+        };
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій</h2>
+    <p>Якщо обробник заданий через атрибут, то браузер читає HTML-розмітку, створює нову функцію із вмісту атрибута та
+        записує у властивість.</p>
+    Тільки HTML:
+    <input type="button" onclick="alert('Клік!')" value="Кнопка">
+    <hr>
+    HTML + JS:
+    <input type="button" id="button" value="Кнопка">
+    <script>
+        button.onclick = function () {
+            alert('Клік!');
+        };
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (Доступ до елемента через this)</h2>
+    <p>Оскільки в елемента DOM може бути тільки одна властивість з ім’ям onclick, то призначити більше одного обробника
+        таким чином не можна.</p>
+    <button onclick="alert(this.innerHTML)">Натисни на мене</button>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій</h2>
+    <p>Оскільки в елемента DOM може бути тільки одна властивість з ім’ям onclick, то призначити більше одного обробника
+        таким чином не можна.</p>
+    <input type="button" id="elemClick" onclick="alert('Було')" value="Click me">
+    <script>
+        elemClick.onclick = function () {
+            alert('Стало');
+        };
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (addEventListener / removeEventListener)</h2>
+    <p>Фундаментальний недолік описаних вище способів присвоєння обробника – неможливість повісити кілька обробників для
+        однієї події.</p>
+    <p class="next">Спосіб призначення обробників за допомогою спеціальних методів:</p>
+    <ul class="next">
+        <li>addEventListener</li>
+        <li>removeEventListener</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (addEventListener)</h2>
+    <p>Синтаксис додавання обробника:</p>
+    <code>element.addEventListener(event, handler, [options]);</code>
+    <ul>
+        <li>event - Назва події, наприклад "click".</li>
+        <li>handler - Посилання на функцію-обробник.</li>
+        <li>options - Додатковий об’єкт із властивостями (once, capture, passive): bool</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (removeEventListener)</h2>
+    <p>Синтаксис видалення обробника:</p>
+    <code>element.removeEventListener(event, handler, [options]);</code>
+    <br>
+    <mark>Для видалення потрібно передати саме ту функцію-обробник, яка була присвоєна.</mark>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (removeEventListener)</h2>
+    <p>Чому слід використовувати цей метод</p>
+    <ul>
+        <li>Очищення пам'яті</li>
+        <li>Уникнення ненавмисних викликів (побічні ефекти)</li>
+        <li>Коректне функціонування коду (динамічно змінюваний контент)</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Обробники подій (addEventListener)</h2>
+    <p>Можна одночасно призначати обробники через DOM-властивість і через addEventListener</p>
+    <input id="elemBtn" type="button" value="Натисни мене"/>
+    <script>
+        function handler1() {
+            alert('Дякую!');
+        }
+
+        function handler2() {
+            alert('Ще раз дякую!');
+        }
+
+        elemBtn.onclick = () => alert("Привіт");
+        elemBtn.addEventListener("click", handler1);
+        elemBtn.addEventListener("click", handler2);
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Об’єкт події</h2>
+    <ul>
+        <li class="next">
+            Щоб правильно обробити подію, можуть знадобитися деталі того, що сталося. Не просто “клік” або “натискання
+            клавіші”, але й координати вказівника миші, яка саме клавіша натиснута і так далі.
+        </li>
+        <li class="next">
+            Коли відбувається подія, браузер створює об’єкт події, записує в нього деталі та передає його як аргумент
+            функції-обробнику.
+        </li>
+    </ul>
+    <input class="next" type="button" value="Натисни мене" id="elemObjectEvent">
+    <script>
+        elemObjectEvent.onclick = function (event) {
+            console.log(event)
+            alert(event.type + " на " + event.currentTarget);
+            alert("Координати: " + event.clientX + ":" + event.clientY);
+        };
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Об’єкт-обробник: handleEvent</h2>
+    <button id="elemObj">Натисни мене</button>
+    <script>
+        let obj = {
+            handleEvent(event) {
+                alert(event.type + " at " + event.currentTarget);
+            }
+        };
+
+        elemObj.addEventListener('click', obj);
+    </script>
+    <p>Якщо addEventListener отримує об’єкт як обробник, він викликає obj.handleEvent(event), коли відбувається
+        подія.</p>
+</section>
+
+<section class="slide">
+    <h2>Способи призначення обробників подій</h2>
+    <ul>
+        <li>Атрибут HTML: onclick="...". (багато коду тут не напишеш)</li>
+        <li>Властивість DOM: elem.onclick = function. (не можемо призначити більше одного обробника на один тип події)
+        </li>
+        <li>Спеціальні методи: addEventListener/removeEventListener</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Бульбашковий механізм (спливання та занурення)</h2>
+    <div onclick="alert('Обробник!')">
+        <em>Якщо клікнути <code>EM</code>, обробник спрацює на <code>DIV</code> .</em>
+    </div>
+    <p><b>Спливання</b>: коли подія відбувається на елементі, спочатку запускаються обробники на ньому, потім на його
+        батькові, потім на інших предках і так до самого верху.</p>
+    <style>
+        .example-1 {
+            margin: 10px;
+            border: 1px solid blue;
+        }
+    </style>
+    <form class="example-1" onclick="alert('form')">FORM
+        <div class="example-1" onclick="alert('div')">DIV
+            <p class="example-1" onclick="alert('p')">P</p>
+        </div>
+    </form>
+</section>
+
+<section class="slide">
+    <h2>Припинення спливання</h2>
+    <p>event.stopPropagation() зупиняє подальше рухання вгору, але на поточному елементі виконуються всі інші
+        обробники.</p>
+    <div onclick="alert(`спливання дійде сюди`)">
+        <button>Спливання дійде</button>
+    </div>
+    <div onclick="alert(`спливання не дійде сюди`)">
+        <br>
+        <button onclick="event.stopPropagation()">Спливання не дійде</button>
+    </div>
+    <p>Щоб зупинити спливання та запобігти виконанню обробників на поточному елементі, є метод
+        event.stopImmediatePropagation()</p>
+</section>
+
+<section class="slide">
+    <h2>Занурення</h2>
+    <p>Стандарт DOM Events описує 3 фази поширення подій:</p>
+    <ul>
+        <li>Фаза занурення (capturing phase) – подія спускається до елемента.</li>
+        <li>Фаза цілі (target phase) – подія досягає цільового елемента.</li>
+        <li>Фаза спливання (bubbling phase) – подія “спливає” від елемента вгору.</li>
+    </ul>
+    <form class="example-1">FORM
+        <div class="example-1">DIV
+            <p class="example-1">P</p>
+        </div>
+    </form>
+    <script>
+        for (let elem of document.querySelectorAll('.example-1')) {
+            elem.addEventListener("click", e => alert(`Capturing: ${elem.tagName}`), true);
+            elem.addEventListener("click", e => alert(`Bubbling: ${elem.tagName}`));
+        }
+    </script>
+</section>
+
+<section class="slide">
+    <h2>event.target</h2>
+    <ul>
+        <li>Обробник батьківського елемента завжди може отримати детальну інформацію про те, де це насправді сталося.
+        </li>
+        <li>Найбільш глибоко вкладений елемент, що викликав подію, називається цільовим елементом, та доступний як
+            event.target.
+        </li>
+        <li>Фаза спливання (bubbling phase) – подія “спливає” від елемента вгору.</li>
+    </ul>
+    <style>
+        #form {
+            background-color: green;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #form div {
+            background-color: blue;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 100px;
+            height: 100px;
+        }
+
+        #form p {
+            background-color: red;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 0;
+        }
+    </style>
+    <form id="form">FORM
+        <div>DIV
+            <p>P</p>
+        </div>
+    </form>
+    <script>
+        form.onclick = function (event) {
+            event.target.style.backgroundColor = 'yellow';
+
+            // chrome needs some time to paint yellow
+            setTimeout(() => {
+                alert("target = " + event.target.tagName + ", this=" + this.tagName);
+                event.target.style.backgroundColor = ''
+            }, 0);
+        };
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Делегування подій (Event delegation) - шаблон обробки подій</h2>
+    <p>Якщо у нас є багато елементів, які обробляються подібним чином, то замість того, щоб призначати обробник кожному
+        з них, ми ставимо один обробник на їхнього спільного предка.</p>
+    <p>У обробнику ми отримуємо event.target, щоб побачити, де насправді сталася подія і обробити її.</p>
+    <p><a href="https://uk.js.cx/article/event-delegation/bagua/" target="_blank">Приклад</a></p>
+</section>
+
+<section class="slide">
+    <h2>Делегування подій - Шаблон “поведінки” (The “behavior” pattern)</h2>
+    <p>Шаблон складається з двох частин:</p>
+    <ul>
+        <li>Ми додаємо спеціальний атрибут до елемента, який описує його поведінку.</li>
+        <li>За допомогою делегування ставиться один обробник на документ, що відстежує усі події і, якщо елемент має
+            атрибут, виконує відповідну дію.
+        </li>
+    </ul>
+    Лічильник: <input type="button" value="1" data-counter>
+    <br>
+    Ще один лічильник: <input type="button" value="2" data-counter>
+    <script>
+        document.addEventListener('click', function (event) {
+
+            if (event.target.dataset.counter !== undefined) { // якщо атрибут існує...
+                event.target.value++;
+            }
+
+        });
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Делегування подій - Поведінка: Перемикач (Behavior: Toggler)</h2>
+    <button data-toggle-id="subscribe-mail">
+        Показати форму підписки
+    </button>
+    <form id="subscribe-mail" hidden>
+        Ваша пошта: <input type="email">
+    </form>
+    <script>
+        document.addEventListener('click', function (event) {
+            let id = event.target.dataset.toggleId;
+            if (!id) return;
+
+            let elem = document.getElementById(id);
+
+            elem.hidden = !elem.hidden;
+        });
+    </script>
+    <ul>
+        <li>Тепер, щоб додати функціональність перемикання до елемента – навіть не потрібно знати JavaScript, достатньо
+            просто використати атрибут data-toggle-id.
+        </li>
+        <li>Це дуже зручно – не потрібно писати JavaScript для кожного такого елемента. Просто використовуйте поведінку.
+            Обробник на рівні документу дозволяє працювати з будь-яким елементом сторінки.
+        </li>
+        <li>Ми також можемо об’єднати кілька видів поведінки в одному елементі.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Типові дії браузера</h2>
+    <ul>
+        <li>Hyperlinks Navigation - Клік на посилання ініціює навігацію до його URL-адреси.</li>
+        <li>Form Submission - Клік на кнопку відправки форми ініціює її відправку на сервер.</li>
+        <li>Page Loading - Браузер завантажує вміст сторінки, коли користувач вводить URL-адресу або відкриває
+            закладку
+        </li>
+        <li>JavaScript Execution - Браузер виконує JavaScript-код, що вбудований в HTML-сторінку або викликається
+            зовнішнім файлом JavaScript
+        </li>
+        <li>Event Handling - Натискання кнопки миші на тексті і переміщення курсору – виділяє текст.</li>
+        <li>Page Rendering... etc.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Запобігання дії браузера</h2>
+    <p>Є два способи запобігти діям браузера:</p>
+    <ol>
+        <li class="next">Основний спосіб – це використовувати об’єкт event. Існує метод event.preventDefault().</li>
+        <li class="next">Якщо обробник призначено за допомогою onevent (а не addEventListener), повернення false спрацює
+            так само.
+        </li>
+    </ol>
+    <div class="next">
+        <a href="/" onclick="return false">Клікніть тут</a>
+        <br>
+        <a href="/" onclick="event.preventDefault()">тут</a>
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Події миші</h2>
+    <ul>
+        <li>mousedown/mouseup</li>
+        <li>mouseover/mouseout</li>
+        <li>mousemove</li>
+        <li>click</li>
+        <li>dblclick</li>
+        <li>contextmenu</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Властивості події миші</h2>
+    <ul>
+        <li>Кнопка: button (0, 1, 2, 3, 4).</li>
+        <li>Клавіші-модифікатори: altKey, ctrlKey, shiftKey і metaKey (Mac).</li>
+        <li>Координати відносно Window: clientX/clientY.</li>
+        <li>Координати відносно Document: pageX/pageY.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Переміщення миші</h2>
+    <p>Переміщення миші - це ті події, які відбуваються, коли вказівник миші переміщається між елементами.</p>
+    <ul>
+        <li>mouseover - виникає, коли вказівник миші наводиться на елемент (спливає)</li>
+        <li>mouseout - виникає, коли залишає його (спливає)</li>
+        <li>mousemove - запускається, коли миша рухається</li>
+        <li>mouseenter - виникає, коли вказівник входить на елемент (не спливає)</li>
+        <li>mouseleave - виникає, коли вказівник залишає елемент (не спливає)</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Drag'n'Drop</h2>
+    <p>Реалізація за допомогою подій миші:</p>
+    <ul>
+        <li>На mousedown – підготувати елемент до переміщення</li>
+        <li>На mousemove перемістити його, змінивши значення left/top при позиціюванні position: absolute</li>
+        <li>На mouseup – виконати усі дії, пов’язані із завершенням перенесення</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Drag'n'Drop</h2>
+    <p>Цілі перенесення (droppables):</p>
+    <ul>
+        <li>draggable елемент - (перетягуваний)</li>
+        <li>droppable елемент - ціль перенесення (куди)</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>HTML Drag and Drop API</h2>
+    <ul style="font-size: 19px">
+        <li>drag - виникає, коли триває перетягування елемента або виділення тексту</li>
+        <li>dragend - виникає, коли завершується перетягування (наприклад, відпускається кнопка миші або натискається
+            Escape
+        </li>
+        <li>dragenter - виникає, коли елемент, що перетягується, потрапляє в допустиму мету скидання</li>
+        <li>dragexit - виникає, коли елемент більше не є метою операції перетягування</li>
+        <li>dragleave - виникає, коли елемент, що перетягується, залишає допустиму ціль скидання</li>
+        <li>dragover - виникає, коли елемент перетягується над допустимою метою скидання кожні кілька сотень
+            мілісекунд
+        </li>
+        <li>dragstart - виникає, коли користувач почав перетягувати елемент</li>
+        <li>drop - виникає, коли елемент скинуто в допустиму зону скидання</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Клавіатура: keydown та keyup</h2>
+    <h3>Події клавіатури:</h3>
+    <ul style="font-size: 19px">
+        <li>keydown – при натисканні клавіші (автоматично повторюється, якщо клавіша довго утримується),</li>
+        <li>keyup – при відпусканні клавіші.</li>
+    </ul>
+    <h3>Основні властивості подій клавіатури:</h3>
+    <ul style="font-size: 19px">
+        <li>code – “код клавіші” ("KeyA", "ArrowLeft" і так далі), специфічний для фізичного розташування клавіші на
+            клавіатурі.
+        </li>
+        <li>key – символ ("A", "a" і так далі), для несимвольних ключів, таких як Esc, зазвичай має те саме значення, що
+            і code.
+        </li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2 class="shout">The End</h2>
+</section>
+
+<div class="progress"></div>
+
+<script src="../../shower.js"></script>
+</body>
+</html>

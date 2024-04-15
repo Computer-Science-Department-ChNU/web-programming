@@ -1,0 +1,27 @@
+.table-row {
+  display: flex;
+}
+.table-cell {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid red;
+  color: white;
+}
+.table-cell h2, .table-cell p {
+  margin: 0;
+}
+.table-cell h2 {
+  background: navy;
+}
+.table-cell p {
+  background: red;
+}
+.table-cell.is-highlighted {
+  background: lime;
+}
+
+/*# sourceMappingURL=styles.css.map */

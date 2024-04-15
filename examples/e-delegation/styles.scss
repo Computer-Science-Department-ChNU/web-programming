@@ -1,0 +1,33 @@
+.table {
+
+  &-row {
+    display: flex;
+  }
+
+  &-cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid red;
+    color: white;
+
+    h2, p {
+      margin: 0;
+    }
+    
+    h2 {
+      background: navy;
+    }
+
+    p {
+      background: red;
+    }
+
+    &.is-highlighted {
+      background: lime;
+    }
+  }
+}

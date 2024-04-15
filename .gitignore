@@ -1,0 +1,15 @@
+*.log*
+.cache
+.output
+.env
+dist
+.DS_Store
+build
+.idea
+logs
+desktop.ini
+report
+*.ignore.*
+*.epub
+*.mobi
+*.pdf
