@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="example/submit.html">
+    Value: <label>
+    <input type="text" name="value">
+</label>
+    <button type="submit">Save</button>
+</form>
+<script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        console.log("Saving value", form.elements.value.value);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<select multiple>
+    <option value="1">0001</option>
+    <option value="2">0010</option>
+    <option value="4">0100</option>
+    <option value="8">1000</option>
+</select> = <span id="output">0</span>
+<script>
+    let select = document.querySelector("select");
+    let output = document.querySelector("#output");
+    select.addEventListener("change", () => {
+        let number = 0;
+        for (let option of Array.from(select.options)) {
+            if (option.selected) {
+                number += Number(option.value);
+            }
+        }
+        output.textContent = number;
+    });
+</script>
+
+
+</body>
+</html>
