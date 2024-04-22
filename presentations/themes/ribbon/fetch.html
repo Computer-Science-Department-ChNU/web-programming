@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <title>Network requests</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+</head>
+<body class="shower list">
+
+<header class="caption">
+    <h1>Network requests</h1>
+</header>
+
+<section class="slide">
+    <h2>Навіщо відправляти мережеві запити на сервер?</h2>
+    <img src="pictures/req.webp" width="70%">
+</section>
+
+<section class="slide">
+    <h2>Network requests</h2>
+    <p>JavaScript може відправляти мережеві запити на сервер та підвантажувати нову інформацію за потребою без
+        перезавантаження сторінки.</p>
+    <ul>
+        <li>Відправляти замовлення,</li>
+        <li>Завантажити інформацію про користувача,</li>
+        <li>Отримати останні оновлення з сервера,</li>
+        <li>…і т.д.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Network requests</h2>
+    <p>Є загальний термін <b>“AJAX”</b> (абревіатура від Asynchronous JavaScript And XML) для мережевих запитів від
+        JavaScript коду.</p>
+    <p>Є кілька способів надіслати мережевий запит і отримати інформацію з сервера.</p>
+    <ul>
+        <li>Метод fetch() - <a href="https://caniuse.com/?search=fetch" target="_blank">підтримка</a></li>
+        <li>Використання обєкту const xhr = new XMLHttpRequest();</li>
+        <li>WebSocket (з’єднання є постійне)</li>
+        <li>Server Side Events (з’єднання є постійне)</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Метод fetch()</h2>
+    <p>Базовий синтаксис: let promise = fetch(url, [options])</p>
+    <ul>
+        <li>url – URL для відправлення запиту.</li>
+        <li>options – додаткові параметри: метод, заголовки і т.д</li>
+    </ul>
+    <p>Без options, це просто GET запит, який завантажує зміст за адресою url.</p>
+    <p>Браузер одразу починає робити запит та повертає проміс, який зовнішний код використовує для отримання
+        результату.</p>
+</section>
+
+<section class="slide">
+    <h2>Асинхронність, promise, async і await</h2>
+    <p>Під час стандартного виконання JavaScript інструкції виконуються послідовно, одна за одною. Тобто спочатку
+        виконується перша інструкція, потім друга і так далі. Однак уявімо ситуацію, якщо одна з цих операцій
+        виконується тривалий час. Наприклад, вона виконує якусь високонавантажену роботу, як-от звернення через мережу
+        або звернення до бази даних, що може зайняти невизначений і іноді тривалий час. У підсумку при послідовному
+        виконанні всі наступні операції будуть очікувати виконання цієї операції. Щоб уникнути подібної ситуації,
+        JavaScript дає змогу уникнути подібного сценарію за допомогою асинхронних функцій. <a
+                href="../../../examples/fetch/1.html" target="_blank">Example 1</a>
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Асинхронність, promise, async і await</h2>
+    <p>
+        З <a href="../../../examples/fetch/1.html" target="_blank">Example 1</a> видно, що асинхронна функція <b>asyncFunction()</b>
+        не блокує виконання інших інструкцій програми. Однак під час роботи з подібними функціями ми можемо зіткнутися з
+        низкою проблем. Так, асинхронні функції не повертають результат асинхронного обчислення через ключове слово
+        return, а передають його як параметр функції зворотного виклику <a href="../../../examples/fetch/2.html"
+                                                                           target="_blank">Example 2</a>.
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Асинхронність, promise, async і await</h2>
+    <p>
+        Інша проблема пов'язана з генерацією помилок...
+    </p>
+    <p>Як обробляти помилки?</p>
+</section>
+
+<section class="slide">
+    <h2>Обробка помилок</h2>
+    <p>
+        У процесі роботи програми можуть виникати різні помилки, які порушують хід виконання програми і навіть змушують
+        її перервати виконання <a href="../../../examples/fetch/3.html" target="_blank">Example 3</a>.
+    </p>
+    <p>
+        Однак коли ми маємо справу з великою програмою, різні шматки якої писали різні розробники, стає складніше
+        контролювати код. І таких ситуацій може бути багато. Якісь ми можемо самі відстежити та попередити, а якісь ні.
+    </p>
+    <p>Мова JavaScript має інструменти для обробки таких ситуацій.</p>
+</section>
+
+<section class="slide">
+    <h2>Конструкція try..catch..finally</h2>
+    <pre>
+        <code>try {</code>
+        <code>  інструкції блоку try</code>
+        <code>} catch (error) {</code>
+        <code>  інструкції блоку catch</code>
+        <code>} finally {</code>
+        <code>  інструкції блоку finally</code>
+        <code>}</code>
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Конструкція try..catch..finally</h2>
+    <p>Після оператора try визначається блок коду (обов'язковий). У цей блок поміщаються інструкції, під час виконання
+        яких може виникнути потенційна помилка.</p>
+    <p>Потім іде оператор catch. Після цього оператора в круглих дужках вказується назва об'єкта, який міститиме
+        інформацію про помилку. І далі йде блок catch. Цей блок виконується тільки в разі виникнення помилки в блоці
+        try.</p>
+    <p>Після блоку catch йде оператор finally зі своїм блоком інструкцій. Цей блок виконується в кінці після блоку try і
+        catch незалежно від того, виникла помилка чи ні.</p>
+    <p>Блок try є обов'язковим, а один із решти блоків - catch або finally ми можемо опустити: <a
+            href="../../../examples/fetch/4.html" target="_blank">Example 4</a>, <a
+            href="../../../examples/fetch/5.html" target="_blank">Example 5</a>, <a
+            href="../../../examples/fetch/6.html" target="_blank">Example 6</a></p>
+</section>
+
+<section class="slide">
+    <h2>Об’єкт помилки</h2>
+    <p>Коли виникає помилка, JavaScript генерує об’єкт, що містить інформацію про неї. Потім цей об’єкт передається як
+        аргумент в catch(err).</p>
+    <p>Для всіх вбудованих помилок об’єкт помилки має дві головні властивості:</p>
+    <ul>
+        <li>name - назва помилки. Наприклад, для невизначеної змінної назва буде "ReferenceError".</li>
+        <li>message - текстове повідомлення з додатковою інформацією про помилку.</li>
+        <li>stack- поточний стек викликів: рядок з інформацією про послідовність вкладених викликів, що призвели до
+            помилки. Використовується для налагодження.
+        </li>
+    </ul>
+    <a href="../../../examples/fetch/7.html" target="_blank">Example 7</a>
+</section>
+
+<section class="slide">
+    <h2>Оператор throw</h2>
+    <p>Інтерпретатор JavaScript генерує помилки для низки ситуацій, наприклад, під час виклику неіснуючої функції, під
+        час повторного присвоєння константі значення тощо. Але за потреби ми самі можемо генерувати помилки та визначити
+        умови, коли генеруватиметься помилка.</p>
+    <p>Оператор має синтаксис: throw <b>об’єкт помилки</b></p>
+    <p>JavaScript має багато вбудованих конструкторів для вбудованих помилок: Error, SyntaxError, ReferenceError,
+        TypeError та інші. Також вони можуть бути використаними для створення об’єктів помилок.</p>
+    <a href="../../../examples/fetch/8.html" target="_blank">Example 8</a>
+</section>
+
+<section class="slide">
+    <h2>Повторне викидання помилок</h2>
+    <p>Використаємо try...catch, щоб обробити неправильні дані. Але чи може всередині блоку try {...} виникнути інша
+        непередбачувана помилка? Програміст помилився і забув визначити змінну чи ще щось? <a
+                href="../../../examples/fetch/9.html" target="_blank">Example 9</a></p>
+    <p>Блок catch повинен оброблювати тільки відомі помилки та повторно генерувати всі інші типи помилок.</p>
+    <ul>
+        <li>Конструкція catch перехоплює всі помилки.</li>
+        <li>В блоці catch (err) {...} ми аналізуємо об’єкт помилки err.</li>
+        <li>Якщо ми не знаємо як правильно обробити помилку, ми робимо throw err.</li>
+    </ul>
+    <a href="../../../examples/fetch/10.html" target="_blank">Example 10</a>,
+    <a href="../../../examples/fetch/11.html" target="_blank">Example 11</a>
+</section>
+
+<section class="slide">
+    <h2>Асинхронність, promise, async і await</h2>
+    <p>
+        Інша проблема пов'язана з генерацією помилок через оператор throw: <a href="../../../examples/fetch/12.html"
+                                                                              target="_blank">Example 12</a>
+    </p>
+    <p>
+        Від самого початку обробка результату і помилок в асинхронних функціях представляло використання коллбеків
+        (callback) - функцій зворотного виклику, які передавалися в іншу функцію і викликалися пізніше в деякий момент
+        часу. Найпростіший шаблон використання коллбеків: <a href="../../../examples/fetch/13.html" target="_blank">Example
+        13</a>, <a href="../../../examples/fetch/15.html" target="_blank">Example
+        14</a>
+    </p>
+    <p>
+        Наприклад, використовуємо колбек для отримання й обробки результату та помилки асинхронної функції: <a
+            href="../../../examples/fetch/14.html" target="_blank">Example 15</a>
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Асинхронність, promise, async і await</h2>
+    <p>Навіть якщо вам не потрібно працювати з сервером, досить високі шанси зіткнутися з функціями зворотного
+        виклику.</p>
+    <p>forEach, every, some, reduce, filter, або функції сортування sort, або методу addEventListener (другий параметр
+        приймає функцію, яку буде викликано в разі настання події)</p>
+    <p>Аналогічно з установкою обробників подій. Щоразу, коли ви підписуєтеся на подію за допомогою addEventListener,
+        через її другий параметр ви визначаєте функцію зворотного виклику, яка спрацює під час настання події. У світі
+        JavaScript колбеки всюди.</p>
+</section>
+
+<section class="slide">
+    <h2>Асинхронність, promise, async і await</h2>
+    <p>Як передати параметри в колбек-функцію? <a
+            href="../../../examples/fetch/16.html" target="_blank">Example 16</a></p>
+    <p><a href="http://callbackhell.com/" target="_blank">callbackhell</a></p>
+    <p><a href="https://github.com/max-mapper/callback-hell" target="_blank">https://github.com/</a></p>
+</section>
+
+<section class="slide">
+    <h2>Проміси (Promise)</h2>
+</section>
+
+<section class="slide">
+    <h2 class="shout">The End</h2>
+</section>
+
+<div class="progress"></div>
+
+<script src="../../shower.js"></script>
+</body>
+</html>

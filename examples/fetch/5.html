@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Тепер функція callSomeFunc() визначена в програмі, тому під час виклику функції помилки не станеться, і блок try допрацює до кінця. А блок catch за відсутності помилки не буде виконуватися</p>
+<script>
+    function callSomeFunc() {
+        console.log("Функція callSomeFunc");
+    }
+
+    try {
+        callSomeFunc();
+        console.log("Кінець блоку try");
+    } catch (error) {
+        console.log("Помилкааааа!!");
+    }
+
+    console.log("Решта інструкцій...");
+</script>
+</body>
+</html>

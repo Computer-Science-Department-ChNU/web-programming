@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    У рядку <b>console.log("result:", asyncResult)</b> ми намагаємось вивести результат виконання функції <b>asyncFunction()</b>,
+    але ця функція є асинхронною.
+</p>
+<p>Коли ви викликаєте asyncFunction(), вона насправді запускає таймер за допомогою setTimeout і повертає undefined,
+    оскільки result на той момент ще не має значення.</p>
+<p>
+    Тому, коли ви виводите asyncResult, ви бачите undefined, а не очікуване значення 22
+</p>
+<p>catch не буде спрацьовувати через те, що помилка генерується всередині функції, яка є асинхронною</p>
+<p>Коли кидаємо помилку всередині setTimeout, ця помилка не потрапляє до зовнішнього середовища виконання програми, а отже, блок catch не може її перехопити.</p>
+<script>
+    function asyncFunction() {
+        let result; //undefined
+
+        setTimeout(() => {
+            result = 22;
+            if (result < 50) {
+                throw new Error("Некоректне значення");
+            }
+        }, 1000);
+
+        return result; //undefined
+    }
+
+    try {
+        const asyncResult = asyncFunction();
+        console.log("result:", asyncResult)  //undefined
+    } catch (error) {
+        console.error("Error:", error); // Цей рядок НЕ виконується
+    }
+
+    console.log("Кінець програми");
+</script>
+</body>
+</html>

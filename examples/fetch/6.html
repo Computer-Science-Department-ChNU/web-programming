@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Конструкція try також може містити блок finally. Ми можемо використовувати цей блок разом із блоком catch або замість
+    нього. Блок finally виконується незалежно від того, сталася помилка чи ні.</p>
+<p>Якщо ми приберемо блок catch і залишимо тільки блок finally, то помилку не буде оброблено, і програма завершиться помилкою. Однак блок finally все одно виконається:</p>
+<script>
+    try {
+        callSomeFunc();
+        console.log("Кінець блоку try");
+    } catch {
+        console.log("Помилкааааа!!");
+    } finally {
+        console.log("Блок finally працює)")
+    }
+    console.log("Решта інструкцій...");
+
+    // try {
+    //     callSomeFunc();
+    //     console.log("Кінець блоку try");
+    // } finally {
+    //     console.log("Блок finally")
+    // }
+    // console.log("Решта інструкцій...");
+</script>
+</body>
+</html>

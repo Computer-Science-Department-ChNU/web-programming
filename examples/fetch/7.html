@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    try {
+        lalala; // помилка, змінна не визначена!
+    } catch (err) {
+        console.log(err.name); // ReferenceError
+        console.log(err.message); // lalala is not defined
+        console.log(err.stack); // ReferenceError: lalala is not defined at (...call stack)
+
+        // Також можливо вивести всю інформацію про помилку
+        // Помилку конвертовано в рядок формату "name: message"
+        console.log(err); // ReferenceError: lalala is not defined
+    }
+</script>
+</body>
+</html>

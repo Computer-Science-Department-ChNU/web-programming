@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    Тут асинхронна функція asyncFunction() викликається в синхронній манері, в результаті ми отримуємо невизначений
+    результат.
+</p>
+<p>Тому що змінна asyncResult встановлюється до того, як функція asyncFunction згенерує результат</p>
+<script>
+    function asyncFunction() {
+        let result;
+
+        setTimeout(() => {
+            result = 22;
+        }, 1000);
+
+        return result;
+    }
+
+    const asyncResult = asyncFunction();
+
+    console.log("result:", asyncResult)
+</script>
+</body>
+</html>

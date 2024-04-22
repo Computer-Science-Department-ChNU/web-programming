@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //Синтаксис ініціалізації вбудованих помилок:
+    let someError = new Error(message);
+    // or
+    let error = new SyntaxError(message);
+    let error = new ReferenceError(message);
+
+    let newError = new Error("Щось трапилось o_O");
+
+    console.log(error.name); // Error
+    console.log(error.message); // Щось трапилось o_O
+</script>
+</body>
+</html>

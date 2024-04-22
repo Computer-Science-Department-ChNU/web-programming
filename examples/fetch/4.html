@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Таким чином, програма не перериває свою роботу під час виникнення помилки і продовжує свою роботу.</p>
+<script>
+    try {
+        callSomeFunc();
+        console.log("Кінець блоку try");
+    } catch {
+        console.log("Помилкааааа!!");
+    }
+    console.log("Решта інструкцій...");
+</script>
+</body>
+</html>

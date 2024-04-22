@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    const makePizza = function (title, cb) {
+        console.log(`Замовлення на приготування піци "${title}" отримано. Починаємо готувати...`);
+        setTimeout(cb, 3000);
+    }
+
+    const readBook = function () {
+        console.log('Читаю книгу "Чаклун і кристал"...');
+    }
+
+    const eatPizza = function () {
+        console.log('Ура! Піца готова, час підкріпитися.');
+    }
+
+    makePizza('Пеперонні', eatPizza);
+    readBook();
+</script>
+</body>
+</html>
