@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function request(url) {
+        return new Promise(function (resolve, reject) {
+            let responseFromServer
+            /*...*/
+            resolve(responseFromServer)
+        })
+    }
+
+    //Код позбувся зайвої вкладеності, став плоским і більш тестованим.
+    request('/api/users/1')
+        .then((user) => request(`/api/photos/${user.id}/`))
+        .then((photo) => request(`/api/crop/${photo.id}/`))
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error)) // Додатковим плюсом стала можливість обробляти помилки від ланцюжка промісів в одному місці - останнім catch:
+
+    // Також з then() можна повернути не проміс, а звичайне значення. Воно обернеться в проміс самостійно і прокинеться в наступний then():
+    request('/api/users/1')
+        .then((user) => user.id)
+        .then((userId) => request(`/api/photos/${userId}/`))
+        .then((photo) => request(`/api/crop/${photo.id}/`))
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error))
+</script>
+</body>
+</html>

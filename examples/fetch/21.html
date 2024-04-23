@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    async function loadPosts() {
+        const response = await fetch('/api/posts/')
+        return await response.json()
+    }
+
+    async function loadPosts() {
+        try {
+            const response = await fetch('/api/posts/')
+            return await response.json()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+</script>
+</body>
+</html>

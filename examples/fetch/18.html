@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function main() {
+        setTimeout(function greet() {
+            console.log('Hello!')
+        }, 2000)
+
+        console.log('Bye!')
+    }
+
+    main()
+
+    // 1 - Викликаємо функцію main(). Стек:
+    // main()
+
+    // 2 - викликаємо setTimeout(). Стек:
+    // setTimeout()
+    // main()
+
+    // 3- etTimeout завершився, він виходить зі стека:
+    //  main()
+
+    // 4 - Викликаємо console.log('Bye!'):
+    // console.log('Bye!')
+    // main()
+
+    // 5 - Його виклик завершено, він виходить зі стека:
+    //  main()
+
+    // 6 - Виклик main() теж завершено, стек стає порожнім.
+    //
+    // 7 -Минає близько 2 секунд, викликається функція greet(), вона потрапляє в стек:
+    // greet()
+
+    // 8 - Вона викликає console.log('Hello!'):
+    // console.log('Hello!')
+    // greet()
+
+    // 9 -Відпрацювавши, вона йде зі стека:
+    // greet()
+
+    // Після виконання всього блоку стек знову стає порожнім.
+</script>
+</body>
+</html>
