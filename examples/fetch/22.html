@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const promise = new Promise(function (resolve, reject) {
+        const data = getData() // робимо асинхронну операцію: запит у БД, API, etc.
+        resolve(data) // переводимо проміс у стан fulfilled. Результатом виконання буде об'єкт data
+    })
+
+    const errorPromise = new Promise(function (resolve, reject) {
+        reject(new Error('помилка')) // переводимо проміс у стан rejected. Результатом виконання буде об'єкт Error
+    })
+</script>
+</body>
+</html>
