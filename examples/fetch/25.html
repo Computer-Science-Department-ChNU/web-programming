@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // метод finally() приймає як аргумент функцію-колбек,
+    // яка виконується відразу після того,
+    // як проміс змінив стан на rejected або fulfilled:
+
+    let isLoading = true
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}/`).finally(function () {
+        isLoading = false
+    })
+</script>
+</body>
+</html>

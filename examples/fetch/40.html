@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const newPost = {
+        title: 'foo',
+        body: 'bar',
+        userId: 1,
+    }
+
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST', // Тут так само можуть бути GET, PUT, DELETE
+        // Тіло запиту в JSON-форматі
+        body: JSON.stringify(newPost),
+        headers: {
+            // Додаємо необхідні заголовки
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+                console.log(data)
+                // {title: "foo", body: "bar", userId: 1, id: 101}
+            }
+        )
+</script>
+</body>
+</html>

@@ -8,11 +8,21 @@
 <script>
     async function loadPosts() {
         const response = await fetch('/api/posts/')
+        // Усі асинхронні функції всередині
+        // ми викликаємо з await - таким чином проміс,
+        // який функція повертає, автоматично розгортається,
+        // і ми отримуємо значення, яке всередині промісу було.
         return await response.json()
     }
 
     async function loadPosts() {
+        // Ми можемо обробляти помилки з try-catch.
+        // Як і з синхронним кодом, обробка помилок зводиться до
+        // обертання небезпечних операцій у try-catch:
         try {
+            // try-catch зловить не тільки помилки,
+            // які були всередині асинхронних функцій, але також і помилки,
+            // які виникли під час звичайних синхронних операцій.
             const response = await fetch('/api/posts/')
             return await response.json()
         } catch (e) {

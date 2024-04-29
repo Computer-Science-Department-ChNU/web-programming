@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // Код спочатку зробить три запити до API,
+    // за допомогою Promise.all() дочекається їхнього завершення і парсингу відповіді в JSON,
+    // а потім виведе ім'я персонажа для кожного. У консолі з'явиться:
+
+    const peopleIds = [1, 13, 3]
+    const arrayFetchUsers = peopleIds.map(user => fetch(`https://swapi.py4e.com/api/people/${user}`).then((response) => response.json()))
+
+    Promise.all(arrayFetchUsers)
+        .then((responses) => {
+            // responses- масив результатів виконання промісів\
+            console.log('responses', responses)
+            responses.forEach(resp => {
+                console.log(resp.name)
+            })
+            // Luke Skywalker
+            // Chewbacca
+            // R2-D2
+        })
+        .catch(error => {
+            console.error(error)
+        })
+</script>
+</body>
+</html>

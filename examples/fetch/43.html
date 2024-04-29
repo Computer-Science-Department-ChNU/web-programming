@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    fetch('https://i.imgur.com/C5QXZ7u.mp4').then(async (response) => {
+        let received = 0
+
+        // Отримуємо потік у змінну
+        const reader = response.body.getReader()
+
+        // Зчитуємо загальну довжину даних
+        const contentLength = parseInt(response.headers.get('Content-Length'), 10)
+
+        while (true) {
+            // Після виклику read() повертається об'єкт, у якому
+            // done - boolean-значення про те, чи закінчилася інформація,
+            // value - масив байт, які прийшли цього разу
+            const { done, value } = await reader.read()
+
+            if (done) {
+                console.log('Отримано 100%')
+                break
+            }
+
+            received += value.length
+
+            const percent = (received / contentLength) * 100
+            console.log(`Отримано ${percent.toFixed(2)}%`)
+        }
+    })
+</script>
+</body>
+</html>

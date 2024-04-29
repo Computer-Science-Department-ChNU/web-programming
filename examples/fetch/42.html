@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="form">
+    <input type="file" id="avatar">
+    <button type="submit">Завантажити</button>
+</form>
+
+
+<script>
+    // Знаходимо елемент із файлом
+    const fileInput = document.getElementById('avatar')
+    const form = document.getElementById('form')
+
+    function handleSubmit(event) {
+        event.preventDefault()
+
+        const formData = new FormData()
+
+        // Додаємо файли з інпута до даних
+        for (let i = 0; i < fileInput.files.length; i++) {
+            const file = fileInput.files[i]
+            formData.append('avatar', file, file.name)
+        }
+
+        // Надсилаємо файли на сервер
+        fetch('https://backend.com/api/upload', {
+            method: "POST",
+            body: formData,
+        })
+    }
+
+    form.addEventListener('submit', handleSubmit)
+
+</script>
+</body>
+</html>

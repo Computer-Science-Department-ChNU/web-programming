@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let isLoading = true
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}/`)
+        .then(function (movies) {
+            renderList(movies)
+        })
+        .catch(function (err) {
+            renderErrorMessage(err)
+        })
+        .finally(function () {
+            isLoading = false
+        })
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function getMainActorProfileFromMovie(id) {
+        return fetch(`https://swapi.py4e.com/api/films/${id}/`)
+            .then((movieResponse) => {
+                return movieResponse.json()
+            })
+            .then((movie) => {
+                const characterUrl = movie.characters[0].split('//')[1]
+                return fetch(`https://${characterUrl}`)
+            })
+            .then((characterResponse) => {
+                return characterResponse.json()
+            })
+            .catch((err) => {
+                console.error('Error!', err)
+            })
+    }
+
+    getMainActorProfileFromMovie(1).then((profile) => {
+        console.log(profile)
+    })
+</script>
+</body>
+</html>

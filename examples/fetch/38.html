@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    async function getMainActorProfileFromMovie(id) {
+        try {
+            const movieResponse = await fetch(`https://swapi.dev/api/films/${id}/`)
+            const movie = await movieResponse.json()
+            const characterUrl = movie.characters[0].split('//')[1]
+            const characterResponse = await fetch(`https://${characterUrl}`)
+            return characterResponse.json()
+        } catch (err) {
+            console.error('Error!', err)
+        }
+    }
+
+    getMainActorProfileFromMovie(1).then(
+        (profile) => {
+            console.log(profile)
+        }
+    )
+</script>
+</body>
+</html>

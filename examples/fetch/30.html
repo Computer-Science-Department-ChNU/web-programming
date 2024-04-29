@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const promise1 = new Promise(resolve => setTimeout(() => resolve(1), 5000))
+    const promise2 = new Promise(resolve => setTimeout(() => resolve(2), 2000))
+    const promise3 = new Promise(resolve => setTimeout(() => resolve(3), 1000))
+
+    Promise.all([promise1, promise2, promise3])
+        .then(([response1, response2, response3]) => {
+            console.log(response1)
+            // 1
+            console.log(response2)
+            // 2
+            console.log(response3)
+            // 3
+        })
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 1. створюємо функцію getData
+    function getData(onSuccess, onError) {
+        setTimeout(function () {
+            const result = Math.random()
+            if (result > 0.5) {
+                onSuccess(result)
+            } else {
+                onError(new Error('Упс! Щось пішло не так :('))
+            }
+        }, 1000)
+    }
+
+    // 2. Обернемо її в проміс
+    function promisifiedGetData() {
+        return new Promise(function (resolve, reject) {
+            const result = getData(
+                function (result) {
+                    resolve(result)
+                },
+                function (error) {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    // 3. Використання
+    promisifiedGetData()
+        .then(function () {
+            console.log('success')
+        })
+        .catch(function (err) {
+            console.error(err.message)
+        })
+</script>
+</body>
+</html>

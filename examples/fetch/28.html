@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 1. Створити функцію, яка виконуватиме асинхронну операцію:
+    // function earnAllMoney() {}
+
+    // 2. Повернути з функції свіжостворений проміс:
+    // function earnAllMoney() {
+    //     return new Promise(function (resolve, reject) { /* ... */ })
+    // }
+
+    // 3. Аргументом у конструктор передати функцію, яка виконує
+    // асинхронну операцію і переводить проміс
+    // у стан "успіх" або "помилка" залежно від результату:
+
+    function earnAllMoney() {
+        return new Promise(function (resolve, reject) {
+            const result = tryEarnAllMoney() // асинхронна операція
+            if (result.ok) {
+                resolve(result) // успіх → переводимо проміс у fulfilled і передаємо результат
+            } else {
+                reject(new Error(result)) // помилка → переводимо проміс у rejected
+            }
+        })
+    }
+</script>
+</body>
+</html>

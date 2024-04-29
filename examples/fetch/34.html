@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const urls = [
+        'https://jsonplaceholder.typicode.com/todos/1',
+        'https://jsonplaceholder.typicode.org/i_need_an_error',
+    ]
+    const arrayFetchData = urls.map(url => fetch(url).then(res => res.json()))
+
+    Promise.allSettled(arrayFetchData)
+        .then((res) => {
+            console.log('res', res)
+            // res — масив результатів виконання промісів
+            res.forEach(item => {
+                console.log(item)
+                // { status: 'fulfilled', value: { userId: 1, id: 1, ... } }
+                // { status: 'rejected', reason: 'TypeError: Failed to fetch...' }
+            })
+        })
+</script>
+</body>
+</html>
