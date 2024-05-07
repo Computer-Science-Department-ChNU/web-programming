@@ -10,7 +10,7 @@
     Вона зберігає нотатки як об'єкта, асоціюючи заголовки з вмістом.
     Він кодується в JSON і зберігається в localStorage.
     Користувач може вибрати записку через поле select та змінити її текст на textarea. Д
-    одається запис після натискання на кнопку.
+    додається запис після натискання на кнопку.
 </p>
 Notes: <label>
     <select></select>
@@ -30,7 +30,7 @@ Notes: <label>
         for (let name of Object.keys(newState.notes)) {
             let option = document.createElement("option");
             option.textContent = name;
-            if (newState.selected == name) option.selected = true;
+            if (newState.selected === name) option.selected = true;
             list.appendChild(option);
         }
         note.value = newState.notes[newState.selected];
