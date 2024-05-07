@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <title>Відкладання запитів під час пошуку - Debounce на прикладі форми пошуку</title>
     <meta charset="utf-8">
@@ -128,7 +128,7 @@
 <form class="form" id="search" action="/some-route" method="GET">
     <label class="input-label">
         <span class="input-title">Найти улюблену піцу</span>
-        <input class="input" type="search" name="query" placeholder="Маргарита" />
+        <input class="input" type="search" name="query" placeholder="Маргарита"/>
     </label>
     <button class="button button-yellow">Шукати!</button>
 </form>
@@ -168,34 +168,24 @@
     const searchInput = searchForm.querySelector('[type="search"]')
     const searchResults = document.querySelector('.search-results')
 
-    function debounce(callee, timeoutMs) {
-        return function perform(...args) {
-            let previousCall = this.lastCall
-            this.lastCall = Date.now()
-
-            if (previousCall && ((this.lastCall - previousCall) <= timeoutMs)) {
-                clearTimeout(this.lastCallTimer)
-            }
-
-            this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
-        }
-    }
-
-
-    function handleInput(e) {
+    searchInput.addEventListener('input', (e) => {
+        //Зараз кожне натискання клавіші в полі надсилає запит на сервер.
+        // Отримуємо значення в полі,
+        // на якому спрацювала подія
         const {value} = e.target
 
+        // Отримуємо список назв піцц від сервера
         server.search(value).then(function (response) {
             const {list} = response
 
+            // Проходим по каждому элементу списка
+            // и составляем строчку с несколькими элементами <li>…
+            // ...яку потім використовуємо як вміст списку
             searchResults.innerHTML = list.reduce((markup, item) => {
                 return `${markup}<li>${item}</li>`
             }, ``)
         })
-    }
-
-    const debouncedHandle = debounce(handleInput, 250);
-    searchInput.addEventListener('input', debouncedHandle)
+    })
 
     const button = document.querySelector('button')
     button.addEventListener('click', (event) => {

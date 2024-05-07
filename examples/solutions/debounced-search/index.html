@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <title>Відкладання запитів під час пошуку - Debounce на прикладі форми пошуку</title>
     <meta charset="utf-8">
@@ -127,20 +127,18 @@
 <body>
 <form class="form" id="search" action="/some-route" method="GET">
     <label class="input-label">
-        <span class="input-title">Найти улюблену піцу</span>
-        <input class="input" type="search" name="query" placeholder="Маргарита" />
+        <span class="input-title">Знайди свою піцу:</span>
+        <input class="input" type="search" name="query" placeholder="Маргарита"/>
     </label>
     <button class="button button-yellow">Шукати!</button>
 </form>
 <ul class="search-results"></ul>
 <script>
-    // За цим масивом ми будемо шукати назви,
-    // які містять запит юзера
     const pizzaList = [
         'Маргарита',
-        "Пепероні",
-        "Гавайська",
-        "4 Сири",
+        'Пепероні',
+        'Гавайська',
+        '4 Сира',
         'Діабло',
         'Сицилійська'
     ]
@@ -150,9 +148,6 @@
             title.toLowerCase().includes(query.toLowerCase()))
     }
 
-    // Фейковий сервер для запитів
-    // Нам потрібно, щоб "сервер" на запит відповідав масивом назв видів піци,
-    // які ми потім перетворюватимемо на посилання і виводитимемо у списку під формою.
     const server = {
         search(query) {
             console.log(query)
@@ -168,6 +163,12 @@
     const searchInput = searchForm.querySelector('[type="search"]')
     const searchResults = document.querySelector('.search-results')
 
+    // Аргументами будуть функція, яку треба "відкладати" та інтервал часу, через який слід викликати функцію.
+    // Як результат повертаємо іншу функцію. Це потрібно, щоб ми могли не змінювати інші частини коду.
+    // У змінній previousCall ми зберігаємо часову мітку попереднього виклику, а у змінній поточного виклику - часову мітку нинішнього моменту.
+    // Це потрібно, щоб потім порівняти, коли функцію було викликано цього разу і попереднього. Якщо різниця між викликами менша, ніж зазначений інтервал, то ми очищаємо таймаут, який відповідає за безпосередньо виклик функції-аргумента.
+    // Зверніть увагу, що ми передаємо всі аргументи ...args, які отримуємо у функції perform(). Це теж потрібно, щоб не доводилося змінювати інші частини коду.
+    // Якщо таймаут був очищений, виклику не відбудеться. Якщо він не був очищений, то викличеться callee. Таким чином, ми ніби "відсуваємо" виклик callee доти, доки "зовні все не заспокоїться"
     function debounce(callee, timeoutMs) {
         return function perform(...args) {
             let previousCall = this.lastCall
@@ -180,7 +181,6 @@
             this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
         }
     }
-
 
     function handleInput(e) {
         const {value} = e.target
@@ -198,10 +198,11 @@
     searchInput.addEventListener('input', debouncedHandle)
 
     const button = document.querySelector('button')
+
     button.addEventListener('click', (event) => {
         event.preventDefault()
         const printPizzaList = pizzaList.join('\n');
-        alert(`Спробуй найти одну із піц:\n${printPizzaList}`)
+        alert(`Спробуй знайти одну з піц:\n${printPizzaList}`)
     })
 </script>
 </body>
