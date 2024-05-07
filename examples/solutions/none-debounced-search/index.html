@@ -178,8 +178,8 @@
         server.search(value).then(function (response) {
             const {list} = response
 
-            // Проходим по каждому элементу списка
-            // и составляем строчку с несколькими элементами <li>…
+            // Проходимо по кожному елементу списку
+            // і складаємо рядок із кількома елементами <li>...
             // ...яку потім використовуємо як вміст списку
             searchResults.innerHTML = list.reduce((markup, item) => {
                 return `${markup}<li>${item}</li>`
